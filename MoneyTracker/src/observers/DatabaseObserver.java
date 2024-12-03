@@ -1,7 +1,6 @@
 package observers;
 
 
-import person.Person;
 import ticket.Ticket;
 import view.AbstractView;
 

@@ -1,7 +1,5 @@
 package databases;
 
-import person.Person;
-
 import java.util.HashSet;
 
 public class PersonDatabase {
