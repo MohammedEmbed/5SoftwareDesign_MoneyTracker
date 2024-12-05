@@ -1,6 +1,7 @@
 package observers;
 
 
+import person.Person;
 import ticket.Ticket;
 import view.AbstractView;
 
@@ -11,6 +12,8 @@ public class DatabaseObserver {
     public  DatabaseObserver(AbstractView view){
         this.view = view;
     }
+
+
 
     public void updatePersonDB(Person p){
 

@@ -6,14 +6,17 @@ public interface AbstractView {
     void render();
 
 
-    //All events
+    //events to navigate the menu
+    void mainMenuEvent();
     void groupMenuEvent();
     void ticketMenuEvent();
     void calculateMenuEvent();
     void extraMenuEvent();
 
+    //events passed to the controller
     void addPersonEvent();
     void addTicketMenuEvent();
+    void calculateDebtEvent();
 
 
 

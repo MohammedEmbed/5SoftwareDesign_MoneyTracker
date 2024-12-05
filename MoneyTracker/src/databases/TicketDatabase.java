@@ -7,16 +7,16 @@ import java.util.HashSet;
 
 public class TicketDatabase {
 
-    private TicketDatabase instance=null;
+    private static TicketDatabase instance=null;
     private HashSet<Ticket> db;
     private DatabaseObserver observer;
 
     private TicketDatabase(){
-        db = new HashSet<Ticket>();
+        db = new HashSet<>();
     }
-    public TicketDatabase getInstance(){
-        if(this.instance == null){
-            this.instance = new TicketDatabase();
+    public static TicketDatabase getInstance(){
+        if(instance == null){
+            instance = new TicketDatabase();
         }
         return instance;
     }

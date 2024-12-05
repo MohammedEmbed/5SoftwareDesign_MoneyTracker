@@ -1,5 +1,7 @@
 package ticket;
 
+import person.Person;
+
 import java.util.HashMap;
 
 public class Ticket {
