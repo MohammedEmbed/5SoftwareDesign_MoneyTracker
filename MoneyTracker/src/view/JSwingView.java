@@ -1,5 +1,7 @@
 package view;
 
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class JSwingView implements AbstractView{
 
-    //TODO: add private Controller controller
+    private Controller controller;
     private JFrame menuFrame;
     private CardLayout cardLayout;
     private JPanel cardPanel;
@@ -18,8 +20,9 @@ public class JSwingView implements AbstractView{
     private JPanel calculatePanel;
 
 
-    public JSwingView(){
+    public JSwingView(Controller controller){
 
+        this.controller=controller;
         this.menuFrame = new JFrame(){};
         this.cardLayout = new CardLayout();
         this.cardPanel = new JPanel();

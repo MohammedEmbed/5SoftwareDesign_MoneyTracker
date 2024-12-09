@@ -1,9 +1,15 @@
+import controller.Controller;
+import databases.PersonDatabase;
+import databases.TicketDatabase;
+import observers.DatabaseObserver;
+import person.Person;
+import ticket.Ticket;
 import view.AbstractView;
 import viewfactories.AbstractViewFactory;
 import viewfactories.JSwingViewFactory;
 
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -13,17 +19,31 @@ public class Main {
     public static void main(String[] args){
 
         Properties properties = loadProperties();
+
+        PersonDatabase personDB = PersonDatabase.getInstance();
+        TicketDatabase ticketDB = TicketDatabase.getInstance();
+        DatabaseObserver observer = new DatabaseObserver();
+        Controller controller = new Controller(personDB, ticketDB);
+        ticketDB.addObserver(observer);
+
         if(Objects.equals(properties.getProperty("view.type"),"JSwing")){
-            AbstractView view = createJSwingView();
+            AbstractViewFactory factory = new JSwingViewFactory();
+            AbstractView view = factory.createView(controller);
             view.render();
         }else if(Objects.equals(properties.getProperty("view.type"),"Terminal")) {
-            AbstractView view = createTerminalView();
+            AbstractView view = createTerminalView(controller);
             view.render();
         }else {
             System.out.println("Error: View type could not be loaded.");
         }
 
-
+        Person testPerson = new Person("test","1");
+        Person testPerson2 = new Person("test2","2");
+        HashMap<Person,Double> map = new HashMap<>();
+        map.put(testPerson2,21.0);
+        Ticket testTicket = new Ticket(testPerson,21.0,"Even split",map);
+        ticketDB.addTicket(testTicket);
+        ticketDB.removeTicket(testTicket);
 
     }
 
@@ -43,13 +63,8 @@ public class Main {
         return null;
     }
 
-    private static AbstractView createJSwingView(){
-        AbstractViewFactory factory = new JSwingViewFactory();
-        return factory.createView();
 
-    }
-
-    private static AbstractView createTerminalView(){
+    private static AbstractView createTerminalView(Controller controller){
 
         return null;
     }

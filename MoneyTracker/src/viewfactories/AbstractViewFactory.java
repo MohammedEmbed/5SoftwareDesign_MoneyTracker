@@ -1,17 +1,9 @@
 package viewfactories;
 
-import databases.PersonDatabase;
-import databases.TicketDatabase;
+import controller.Controller;
 import view.AbstractView;
 
 public interface AbstractViewFactory {
-    AbstractView createView();
+    AbstractView createView(Controller c);
 
-    default PersonDatabase createPersonDatabase(){
-        return PersonDatabase.getInstance();
-    }
-
-    default TicketDatabase createTicketDatabase(){
-        return TicketDatabase.getInstance();
-    }
 }

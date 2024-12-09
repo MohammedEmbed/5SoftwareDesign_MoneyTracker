@@ -27,7 +27,12 @@ public class TicketDatabase {
 
     public void addTicket(Ticket t) {
 
-        observer.updateTicketDB(t);
+        observer.updateTicketDB(t,true);
+    }
+
+    public void removeTicket(Ticket t) {
+
+        observer.updateTicketDB(t,false);
     }
 
 
