@@ -6,7 +6,6 @@ import java.util.HashSet;
 
 public class PersonDatabase {
     private static PersonDatabase instance;
- // heeft set van personen en hoe hasht (hoe zie ik de verscchillende personen door bankrekening)
     private static HashSet<Person> db; //singleton pattern
     private PersonDatabase(){
         db = new HashSet<>();
@@ -18,6 +17,14 @@ public class PersonDatabase {
         }
 
         return instance;
+    }
+
+    public void addPerson(Person person){
+        db.add(person);
+    }
+
+    public void removePerson(Person person){
+        db.remove(person);
     }
 
 }
