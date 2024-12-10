@@ -1,2 +1,2 @@
-[2024-11-10 8:31:18] LOG: Ticket added: Even split ticket: 21.0 paid by person.Person@271053e1 paid for: {person.Person@91161c7=21.0}
-[2024-11-10 8:31:18] LOG: Ticket removed: Even split ticket: 21.0 paid by person.Person@271053e1 paid for: {person.Person@91161c7=21.0}
+[2024-11-10 11:13:58] LOG: Ticket added: Even split ticket: €21.0 paid by test. Paid for: [test2: €21.0]
+[2024-11-10 11:13:58] LOG: Ticket removed: Even split ticket: €21.0 paid by test. Paid for: [test2: €21.0]

@@ -16,12 +16,12 @@ public class Controller {
 
     }
 
-    public void addPerson(Person person){
-        personDB.addPerson(person);
-    }
+    public void addPerson(Person p){personDB.addPerson(p);}
+    public void removePerson(Person p) {personDB.removePerson(p);}
 
     public void addTicket(Ticket ticket){
         ticketDB.addTicket(ticket);
     }
+    public void removeTicket(Ticket t) {ticketDB.removeTicket(t);}
 
 }

@@ -3,6 +3,7 @@ package ticket;
 import person.Person;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Ticket {
     private Person beneficiary;
@@ -20,7 +21,15 @@ public class Ticket {
 
     @Override
     public String toString(){//TODO: make Person and debts have a toString method
-        return paymentType + " ticket: " + total + " paid by " + beneficiary + " paid for: " + debts;
+        StringBuilder sb = new StringBuilder(paymentType + " ticket: €" + total + " paid by " + beneficiary + ". Paid for: [");
+        String prefix = "";
+        for(HashMap.Entry<Person, Double> entry: debts.entrySet()){
+            sb.append(prefix);
+            prefix=",";
+            sb.append(entry.getKey()).append(": €").append(entry.getValue());
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
 

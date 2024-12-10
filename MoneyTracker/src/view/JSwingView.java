@@ -116,6 +116,13 @@ public class JSwingView implements AbstractView{
 
     }
 
+    private void initMainMenu(){}
+
+    private void initGroupMenu(){}
+    private void initTicketMenu(){}
+    private void initCalculateMenu(){}
+
+
 
     @Override
     public void render() {
@@ -153,8 +160,7 @@ public class JSwingView implements AbstractView{
     }
 
     @Override
-    public void addPersonEvent() {
-        cardLayout.show(cardPanel, "add person");
+    public void addPersonEvent() {//tell the controller to update the person Database with a person
         //we send to controller to add the person.
         String name = personField.getText();
         String bankNumber = bankNumberField.getText();
@@ -169,6 +175,7 @@ public class JSwingView implements AbstractView{
             JOptionPane.showMessageDialog(null, "Name CANNOT be empty!!");
 
         }
+        //TODO: update groupPanel to show new person
 
 
     }
