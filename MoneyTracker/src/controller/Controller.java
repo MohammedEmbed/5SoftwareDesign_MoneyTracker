@@ -24,4 +24,6 @@ public class Controller {
     }
     public void removeTicket(Ticket t) {ticketDB.removeTicket(t);}
 
+
+
 }

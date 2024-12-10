@@ -23,6 +23,10 @@ public class JSwingView implements AbstractView{
     private JTextField personField;
     private JTextField bankNumberField;
 
+    private JTextField amount;
+
+    private JComboBox comboBox;
+
 
 
     public JSwingView(Controller controller){
@@ -108,6 +112,32 @@ public class JSwingView implements AbstractView{
         JButton ticketToMenuButton = new JButton("Back");
         ticketPanel.add(ticketToMenuButton);
         ticketToMenuButton.addActionListener(e -> mainMenuEvent());
+
+        personField = new JTextField("name");
+        bankNumberField = new JTextField("banknumber");
+        ticketPanel.add(personField);
+        ticketPanel.add(bankNumberField);
+
+        String [] types = {"Restaurant", "Airplane", "Taxi", "Concerts", "Others"};
+        comboBox = new JComboBox(types);
+        ticketPanel.add(comboBox);
+
+        JRadioButton Kind1 = new JRadioButton("even");
+        JRadioButton Kind2 = new JRadioButton("uneven");
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(Kind1);
+        buttonGroup.add(Kind2);
+        ticketPanel.add(Kind1);
+        ticketPanel.add(Kind2);
+
+        amount = new JTextField("0.0");
+        ticketPanel.add(amount);
+
+        JButton addTicketButton = new JButton("Add the ticket");
+        ticketPanel.add(addTicketButton);
+        addTicketButton.addActionListener(e -> addTicketMenuEvent());
+
+
     }
     private void initCalculateMenu(){
         //calculatePanel
@@ -141,6 +171,7 @@ public class JSwingView implements AbstractView{
     @Override
     public void ticketMenuEvent() {
         cardLayout.show(cardPanel,"ticket");
+
     }
 
     @Override
@@ -174,10 +205,23 @@ public class JSwingView implements AbstractView{
         //TODO: update groupPanel to show new person
 
 
+
     }
 
     @Override
     public void addTicketMenuEvent() {
+        String description = comboBox.getSelectedItem().toString();
+        String name = personField.getText();
+        String bankNumber = bankNumberField.getText();
+        Double total = Double.parseDouble(amount.getText());
+
+        //get person from database
+        /*
+        if(name == "name from database" && banknumber == "name from banknumber"){
+            controller.addTicket(description, name, );
+        }*/
+
+
 
     }
 
