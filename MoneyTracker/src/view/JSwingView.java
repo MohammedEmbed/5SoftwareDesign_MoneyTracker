@@ -1,6 +1,7 @@
 package view;
 
 import controller.Controller;
+import person.Person;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,10 @@ public class JSwingView implements AbstractView{
     private JPanel groupPanel;
     private JPanel ticketPanel;
     private JPanel calculatePanel;
+    private JPanel personPannel;
+    private JTextField personField;
+    private JTextField bankNumberField;
+
 
 
     public JSwingView(Controller controller){
@@ -31,6 +36,7 @@ public class JSwingView implements AbstractView{
         this.groupPanel = new JPanel();
         this.ticketPanel = new JPanel();
         this.calculatePanel = new JPanel();
+        this.personPannel = new JPanel();
 
 
         initialize();
@@ -56,6 +62,10 @@ public class JSwingView implements AbstractView{
         menuPanel.add(menuToCalculateButton);
         menuToCalculateButton.addActionListener(e -> calculateMenuEvent());
 
+        /*JButton addPersonButton = new JButton("Add Person");
+        menuPanel.add(addPersonButton);
+        addPersonButton.addActionListener(e -> addPersonEvent());*/
+
         //groupPanel
         groupPanel.setLayout(new BorderLayout());
         groupPanel.add(new JLabel("Group"));
@@ -64,6 +74,14 @@ public class JSwingView implements AbstractView{
         groupPanel.add(groupToMenuButton,BorderLayout.NORTH);
         groupToMenuButton.addActionListener(e -> mainMenuEvent());
 
+
+        JButton addPersonButton = new JButton("Add Person");
+        personField = new JTextField("name");
+        bankNumberField = new JTextField("banknumber");
+        groupPanel.add(addPersonButton, BorderLayout.EAST);
+        addPersonButton.addActionListener(e -> addPersonEvent());
+        groupPanel.add(personField,BorderLayout.WEST);
+        groupPanel.add(bankNumberField);
         JPanel groupList = new JPanel();
         groupList.setLayout(new BoxLayout(groupList,BoxLayout.Y_AXIS));
         groupList.add(new JLabel("person1:"));
@@ -79,12 +97,14 @@ public class JSwingView implements AbstractView{
         ticketPanel.add(ticketToMenuButton);
         ticketToMenuButton.addActionListener(e -> mainMenuEvent());
 
+
         //calculatePanel
         calculatePanel.add(new JLabel("Calculate"));
 
         JButton calculateToMenuButton = new JButton("Back");
         calculatePanel.add(calculateToMenuButton);
         calculateToMenuButton.addActionListener(e -> mainMenuEvent());
+
 
 
         cardPanel.add(menuPanel,"menu");
@@ -134,6 +154,22 @@ public class JSwingView implements AbstractView{
 
     @Override
     public void addPersonEvent() {
+        cardLayout.show(cardPanel, "add person");
+        //we send to controller to add the person.
+        String name = personField.getText();
+        String bankNumber = bankNumberField.getText();
+        Person person = new Person(name, bankNumber);
+
+        if (!name.isEmpty()){
+            controller.addPerson(person);
+            personField.setText("");
+            bankNumberField.setText("");
+            System.out.println(person);
+        } else {
+            JOptionPane.showMessageDialog(null, "Name CANNOT be empty!!");
+
+        }
+
 
     }
 
