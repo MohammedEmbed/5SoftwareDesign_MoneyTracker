@@ -38,7 +38,6 @@ public class JSwingView implements AbstractView{
         this.calculatePanel = new JPanel();
         this.personPannel = new JPanel();
 
-
         initialize();
     }
 
@@ -47,7 +46,20 @@ public class JSwingView implements AbstractView{
         menuFrame.setSize(600,300);
         cardPanel.setLayout(cardLayout);
 
+        initMainMenu();
+        initGroupMenu();
+        initTicketMenu();
+        initCalculateMenu();
+        cardPanel.add(menuPanel,"menu");
+        cardPanel.add(groupPanel,"group");
+        cardPanel.add(ticketPanel,"ticket");
+        cardPanel.add(calculatePanel,"calculate");
 
+        menuFrame.add(cardPanel);
+
+    }
+
+    private void initMainMenu(){
         //menuPanel
         menuPanel.add(new JLabel("Menu"));
         JButton menuToGroupButton = new JButton("Group");
@@ -61,11 +73,9 @@ public class JSwingView implements AbstractView{
         JButton menuToCalculateButton = new JButton("Calculate");
         menuPanel.add(menuToCalculateButton);
         menuToCalculateButton.addActionListener(e -> calculateMenuEvent());
+    }
 
-        /*JButton addPersonButton = new JButton("Add Person");
-        menuPanel.add(addPersonButton);
-        addPersonButton.addActionListener(e -> addPersonEvent());*/
-
+    private void initGroupMenu(){
         //groupPanel
         groupPanel.setLayout(new BorderLayout());
         groupPanel.add(new JLabel("Group"));
@@ -91,36 +101,22 @@ public class JSwingView implements AbstractView{
 
         groupPanel.add(groupList,BorderLayout.SOUTH);
 
+    }
+    private void initTicketMenu(){
         //ticketPanel
         ticketPanel.add(new JLabel("Ticket"));
         JButton ticketToMenuButton = new JButton("Back");
         ticketPanel.add(ticketToMenuButton);
         ticketToMenuButton.addActionListener(e -> mainMenuEvent());
-
-
+    }
+    private void initCalculateMenu(){
         //calculatePanel
         calculatePanel.add(new JLabel("Calculate"));
 
         JButton calculateToMenuButton = new JButton("Back");
         calculatePanel.add(calculateToMenuButton);
         calculateToMenuButton.addActionListener(e -> mainMenuEvent());
-
-
-
-        cardPanel.add(menuPanel,"menu");
-        cardPanel.add(groupPanel,"group");
-        cardPanel.add(ticketPanel,"ticket");
-        cardPanel.add(calculatePanel,"calculate");
-
-        menuFrame.add(cardPanel);
-
     }
-
-    private void initMainMenu(){}
-
-    private void initGroupMenu(){}
-    private void initTicketMenu(){}
-    private void initCalculateMenu(){}
 
 
 
