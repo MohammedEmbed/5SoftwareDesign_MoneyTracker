@@ -2,6 +2,8 @@ package controller;
 
 import databases.PersonDatabase;
 import databases.TicketDatabase;
+import person.Person;
+import ticket.Ticket;
 
 public class Controller {
 
@@ -14,6 +16,12 @@ public class Controller {
 
     }
 
+    public void addPerson(Person person){
+        personDB.addPerson(person);
+    }
 
+    public void addTicket(Ticket ticket){
+        ticketDB.addTicket(ticket);
+    }
 
 }
