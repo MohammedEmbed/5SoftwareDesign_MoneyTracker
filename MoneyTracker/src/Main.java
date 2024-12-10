@@ -41,7 +41,7 @@ public class Main {
         Person testPerson2 = new Person("test2","2");
         HashMap<Person,Double> map = new HashMap<>();
         map.put(testPerson2,21.0);
-        Ticket testTicket = new Ticket(testPerson,21.0,"Even split",map);
+        Ticket testTicket = new Ticket("airplane ride",testPerson,21.0,"Even split",map);
         controller.addTicket(testTicket);
         controller.removeTicket(testTicket);
 
