@@ -27,4 +27,10 @@ public class PersonDatabase {
         db.remove(person);
     }
 
+    public HashSet<Person> getAllPersons(){
+        return new HashSet<>(db);
+        // I need function to compare if person that makes a ticket is a person from database
+        //Return new HashSet to make copy so that we don't ruin the original.
+    }
+
 }

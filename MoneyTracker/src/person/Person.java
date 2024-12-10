@@ -8,11 +8,18 @@ public class Person {
         this.bankNumber=bankNumber;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getBankNumber() {
+        return bankNumber;
+    }
 
     @Override
     public String toString(){
 
-        return this.name;
+        return "name:" + name + ", Banknumber: "+ bankNumber;
     }
 
 
