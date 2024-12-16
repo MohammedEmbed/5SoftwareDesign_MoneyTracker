@@ -34,6 +34,8 @@ public class TicketDatabase {
 
         observer.updateTicketDB(t,false);
     }
-
+    public HashSet<Ticket> getAllTickets(){
+        return new HashSet<>(db); // we return a copy
+    }
 
 }

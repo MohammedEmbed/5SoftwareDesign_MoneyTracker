@@ -26,9 +26,8 @@ public class JSwingView implements AbstractView{
     private JTextField personField2;
     private JTextField bankNumberField;
     private JTextField bankNumberField2;
-
-    private JTextField amount;
-    private JTextField amount2;
+     private JTextField totalAmount;
+    private JTextField amountSpended;
 
     private JComboBox comboBox;
     private ButtonGroup buttonGroup;
@@ -119,26 +118,38 @@ public class JSwingView implements AbstractView{
     }
     private void initTicketMenu(){
         //ticketPanel
+        ticketPanel.setLayout(new BoxLayout(ticketPanel, BoxLayout.Y_AXIS));
         ticketPanel.add(new JLabel("Ticket"));
         JButton ticketToMenuButton = new JButton("Back");
         ticketPanel.add(ticketToMenuButton);
         ticketToMenuButton.addActionListener(e -> mainMenuEvent());
 
-        beneficiaryNameField = new JTextField("Beneficiary");
-        beneficiaryNameField.setPreferredSize(new Dimension(80,30));
+        //beneficiary
+        JPanel beneficiaryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        beneficiaryPanel.add(new JLabel("Name of beneficiary: "));
+        beneficiaryNameField = new JTextField(10);
+        beneficiaryPanel.add(beneficiaryNameField);
 
-        beneficiaryBankField = new JTextField("banknumber");
-        beneficiaryBankField.setPreferredSize(new Dimension(80,30));
+        beneficiaryPanel.add(new JLabel("BankNumber: "));
+        beneficiaryBankField = new JTextField(10);
+        beneficiaryPanel.add(beneficiaryBankField);
 
-        ticketPanel.add(beneficiaryNameField);
-        ticketPanel.add(beneficiaryBankField);
+        ticketPanel.add(beneficiaryPanel);
 
+        //information of ticket: type and amount that was spent
+        JPanel ticketInfoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         String [] types = {"Restaurant", "Airplane", "Taxi", "Concerts", "Others"};
         comboBox = new JComboBox(types);
-        ticketPanel.add(comboBox);
+        ticketInfoPanel.add(new JLabel("Type:"));
+        ticketInfoPanel.add(comboBox);
 
-        amount = new JTextField("0.0");
+        ticketInfoPanel.add(new JLabel ("Total amount: "));
+        totalAmount = new JTextField(10);
+        ticketInfoPanel.add(totalAmount);
+        ticketPanel.add(ticketInfoPanel);
 
+        JPanel paymentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        paymentPanel.add(new JLabel("Payemnt Type: "));
         JRadioButton kind1 = new JRadioButton("even");
         kind1.setActionCommand("even");
         JRadioButton kind2 = new JRadioButton("uneven");
@@ -146,22 +157,30 @@ public class JSwingView implements AbstractView{
         buttonGroup = new ButtonGroup();
         buttonGroup.add(kind1);
         buttonGroup.add(kind2);
-        ticketPanel.add(kind1);
-        ticketPanel.add(kind2);
+        paymentPanel.add(kind1);
+        paymentPanel.add(kind2);
+        ticketPanel.add(paymentPanel);
 
-        personField2 = new JTextField("spender");
-        personField2.setPreferredSize(new Dimension(80,30));
-        bankNumberField2 = new JTextField("bankNR of spender");
-        bankNumberField2.setPreferredSize(new Dimension(110,30));
-        amount2 = new JTextField("0.0");
+        // information of the spender
+        /*JPanel spenderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        spenderPanel.add(new JLabel("Name of spender "));
+        personField2 = new JTextField(10);
+        spenderPanel.add(personField2);
 
-        ticketPanel.add(amount2);
-        ticketPanel.add(personField2);
-        ticketPanel.add(bankNumberField2);
+        spenderPanel.add(new JLabel("Banknumber of spender: "));
+        bankNumberField2 = new JTextField(10);
+        spenderPanel.add(bankNumberField2);
 
+        spenderPanel.add(new JLabel("Amount spent: "));
+        amountSpended = new JTextField(10);
+        spenderPanel.add(amountSpended);
+
+        ticketPanel.add(spenderPanel);
+*/
+        //add button
         JButton addTicketButton = new JButton("Add the ticket");
-        ticketPanel.add(addTicketButton);
         addTicketButton.addActionListener(e -> addTicketMenuEvent());
+        ticketPanel.add(addTicketButton);
 
 
     }
@@ -237,26 +256,39 @@ public class JSwingView implements AbstractView{
     @Override
     public void addTicketMenuEvent() {
         String description = comboBox.getSelectedItem().toString();
-        String name = beneficiaryNameField.getText();
-        String bankNumber = beneficiaryBankField.getText();
-        Double total = Double.parseDouble(amount.getText());
+        String beneficiaryName = beneficiaryNameField.getText();
+        String beneficaryBankNR = beneficiaryBankField.getText();
+        Double total = Double.parseDouble(totalAmount.getText());
         String paymentType = buttonGroup.getSelection().getActionCommand();
 
-
-        String nameSpender = personField2.getText();
+        HashMap<Person, Double> payments = new HashMap<>();
+        /*String nameSpender = personField2.getText();
         String bankSpender = bankNumberField2.getText();
-        Double debt = Double.parseDouble(amount2.getText());
+        Double amountSpent = Double.parseDouble(amountSpended.getText());*/
 
 
-        Person beneficiary = controller.compare(name, bankNumber);
-        Person spender = controller.compare(nameSpender, bankSpender);
+        Person beneficiary = controller.compare(beneficiaryName, beneficaryBankNR);
+        //Person spender = controller.compare(nameSpender, bankSpender);
 
-        if(beneficiary != null && spender != null){
-            debts.put(spender, debt);
+        if(beneficiary != null){
+            if(paymentType.equals("uneven")){
+                int amountOfPeople = Integer.parseInt(JOptionPane.showInputDialog("How many people participated?"));
+                for (int i = 0; i < amountOfPeople; i++){
+                    String nameSpender = JOptionPane.showInputDialog("name of person " + (i + 1) + " : ");
+                    String bankSpender = JOptionPane.showInputDialog("bankNR of "+nameSpender+ " :");
+                    Double amountSpent = Double.parseDouble(JOptionPane.showInputDialog("How much did "+ nameSpender+ " spent?"));
 
-            Ticket ticket = new Ticket(description, beneficiary, total, paymentType, debts);
-            controller.addTicket(ticket);
-            System.out.println("Ticket" + ticket + "is added successfully!");
+                    Person spender = controller.compare(nameSpender, bankSpender);
+                    if(spender != null){
+                        payments.put(spender, amountSpent);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Spender not found in group!");
+                    }
+                }
+            }
+            //payments.put(spender, amountSpent);
+            controller.addTicket(description, beneficiary, total, paymentType, payments);
+
         } else{
             JOptionPane.showMessageDialog(null, "Benificiary or spender is not in the group!");
         }
@@ -265,7 +297,6 @@ public class JSwingView implements AbstractView{
 
     @Override
     public void calculateDebtEvent() {
-
     }
 
 }

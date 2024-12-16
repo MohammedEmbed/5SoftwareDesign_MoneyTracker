@@ -3,7 +3,6 @@ package ticket;
 import person.Person;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class Ticket {
     private String description;
@@ -17,7 +16,7 @@ public class Ticket {
         this.beneficiary=beneficiary;
         this.total=total;
         this.paymentType=paymentType;
-        this.debts=debts;
+        this.debts =debts;
 
     }
 
