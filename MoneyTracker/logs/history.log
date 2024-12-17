@@ -1,2 +1,3 @@
-[2024-11-10 11:52:47] LOG: Ticket added: Even split ticket: 'airplane ride' €21.0 paid by test. Paid for: [test2: €21.0]
-[2024-11-10 11:52:47] LOG: Ticket removed: Even split ticket: 'airplane ride' €21.0 paid by test. Paid for: [test2: €21.0]
+[2024-11-17 11:46:22] LOG: Ticket added:  Even split ticket: 'airplane ride' €21.0 paid by name:test, Banknumber: 1. Paid for: [name:test2, Banknumber: 2: €21.0]
+[2024-11-17 11:46:22] LOG: Ticket removed:  Even split ticket: 'airplane ride' €21.0 paid by name:test, Banknumber: 1. Paid for: [name:test2, Banknumber: 2: €21.0]
+[2024-11-17 11:46:22] LOG: Ticket added:  Even split ticket: 'airplane ride' €21.0 paid by name:test, Banknumber: 1. Paid for: [name:test2, Banknumber: 2: €21.0]

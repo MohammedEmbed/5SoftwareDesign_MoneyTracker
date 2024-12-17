@@ -39,11 +39,11 @@ public class DatabaseObserver {
     }
 
 
-    public void updatePersonDB(Person p){
+    public void updatePersonDB(Person p, boolean isAdded){
 
     }
 
-    public void updateTicketDB(Ticket t, Boolean isAdded){
+    public void updateTicketDB(Ticket t, boolean isAdded){
 
 
         int year = this.calendar.get(Calendar.YEAR);
@@ -53,13 +53,15 @@ public class DatabaseObserver {
         int minute = this.calendar.get(Calendar.MINUTE);
         int second = this.calendar.get(Calendar.SECOND);
 
-        String logEntry;
-        if(isAdded) {
-            logEntry = "[" + year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second+"] LOG: Ticket added: " + t+"\n";
 
-        }else{
-            logEntry = "[" + year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second+ "] LOG: Ticket removed: " + t+"\n";
-        }
+        String logAction = isAdded ? "Ticket added: " : "Ticket removed: ";
+        String logEntry = "[" + year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second+"] LOG: "+logAction + t+"\n";;
+//        if(isAdded) {
+//            logEntry = "[" + year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second+"] LOG: Ticket added: " + t+"\n";
+//
+//        }else{
+//            logEntry = "[" + year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second+ "] LOG: Ticket removed: " + t+"\n";
+//        }
 
         try {
             FileWriter writer = new FileWriter("Moneytracker/logs/history.log",true);

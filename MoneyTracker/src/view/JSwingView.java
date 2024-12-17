@@ -6,6 +6,7 @@ import ticket.Ticket;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class JSwingView implements AbstractView{
@@ -267,10 +268,10 @@ public class JSwingView implements AbstractView{
         Double amountSpent = Double.parseDouble(amountSpended.getText());*/
 
 
-        Person beneficiary = controller.isInGroup(beneficiaryName, beneficaryBankNR);
+        Person beneficiary = new Person(beneficiaryName, beneficaryBankNR);
         //Person spender = controller.compare(nameSpender, bankSpender);
 
-        if(beneficiary != null){
+        if(controller.isInGroup(beneficiary)){
             if(paymentType.equals("uneven")){
                 int amountOfPeople = Integer.parseInt(JOptionPane.showInputDialog("How many people participated?"));
                 for (int i = 0; i < amountOfPeople; i++){
@@ -278,8 +279,8 @@ public class JSwingView implements AbstractView{
                     String bankSpender = JOptionPane.showInputDialog("bankNR of "+nameSpender+ " :");
                     Double amountSpent = Double.parseDouble(JOptionPane.showInputDialog("How much did "+ nameSpender+ " spent?"));
 
-                    Person spender = controller.isInGroup(nameSpender, bankSpender);
-                    if(spender != null){
+                    Person spender = new Person(nameSpender, bankSpender);
+                    if(controller.isInGroup(spender)){
                         debts.put(spender, amountSpent);
                     } else {
                         JOptionPane.showMessageDialog(null, "Spender not found in group!");
@@ -307,6 +308,9 @@ public class JSwingView implements AbstractView{
 
     @Override
     public void calculateDebtEvent() {
+
+
+        menuFrame.repaint();
     }
 
 }

@@ -1,5 +1,7 @@
 package person;
 
+import java.util.Objects;
+
 public class Person {
     private String name;
     private String bankNumber;
@@ -22,5 +24,14 @@ public class Person {
         return "name:" + name + ", Banknumber: "+ bankNumber;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o.getClass()!=this.getClass()){
+            return false;
+        }
+        Person other = (Person) o;
+
+        return Objects.equals(this.name, other.getName()) && Objects.equals(this.bankNumber, other.getBankNumber());
+    }
 
 }

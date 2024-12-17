@@ -25,14 +25,17 @@ public class TicketDatabase {
         this.observer=observer;
     }
 
-    public void addTicket(Ticket t) {
+    public boolean addTicket(Ticket t) {
+
 
         observer.updateTicketDB(t,true);
+        return this.db.add(t);
     }
 
-    public void removeTicket(Ticket t) {
+    public boolean removeTicket(Ticket t) {//TODO: check if logs should actually be updated with the removal of the ticket.
 
         observer.updateTicketDB(t,false);
+        return this.db.remove(t);
     }
     public HashSet<Ticket> getAllTickets(){
         return new HashSet<>(db); // we return a copy

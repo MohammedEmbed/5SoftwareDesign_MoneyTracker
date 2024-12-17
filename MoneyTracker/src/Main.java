@@ -42,9 +42,9 @@ public class Main {
         HashMap<Person,Double> map = new HashMap<>();
         map.put(testPerson2,21.0);
         Ticket testTicket = new Ticket("airplane ride",testPerson,21.0,"Even split",map);
-        //controller.addTicket(testTicket);
-        //controller.removeTicket(testTicket);
-
+        controller.addTicket(testTicket);
+        controller.removeTicket(testTicket);
+        controller.undoCommand();
     }
 
 
