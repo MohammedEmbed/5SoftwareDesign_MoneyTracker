@@ -267,7 +267,7 @@ public class JSwingView implements AbstractView{
         Double amountSpent = Double.parseDouble(amountSpended.getText());*/
 
 
-        Person beneficiary = controller.compare(beneficiaryName, beneficaryBankNR);
+        Person beneficiary = controller.isInGroup(beneficiaryName, beneficaryBankNR);
         //Person spender = controller.compare(nameSpender, bankSpender);
 
         if(beneficiary != null){
@@ -278,16 +278,26 @@ public class JSwingView implements AbstractView{
                     String bankSpender = JOptionPane.showInputDialog("bankNR of "+nameSpender+ " :");
                     Double amountSpent = Double.parseDouble(JOptionPane.showInputDialog("How much did "+ nameSpender+ " spent?"));
 
-                    Person spender = controller.compare(nameSpender, bankSpender);
+                    Person spender = controller.isInGroup(nameSpender, bankSpender);
                     if(spender != null){
-                        payments.put(spender, amountSpent);
+                        debts.put(spender, amountSpent);
                     } else {
                         JOptionPane.showMessageDialog(null, "Spender not found in group!");
                     }
                 }
+            } else if (paymentType.equals("even")) {
+                int amountOfPeople = controller.getGroup().size();
+                double amountPerPerson = total / amountOfPeople;
+
+                for(Person person : controller.getGroup()){
+                    debts.put(person, amountPerPerson);
+                }
+
             }
             //payments.put(spender, amountSpent);
-            controller.addTicket(description, beneficiary, total, paymentType, payments);
+            Ticket ticket = new Ticket(description, beneficiary, total, paymentType, debts);
+            controller.addTicket(ticket);
+            System.out.println("Ticket "+ ticket + "is added successfully!");
 
         } else{
             JOptionPane.showMessageDialog(null, "Benificiary or spender is not in the group!");
