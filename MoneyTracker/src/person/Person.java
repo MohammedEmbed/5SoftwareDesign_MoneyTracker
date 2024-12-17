@@ -34,4 +34,9 @@ public class Person {
         return Objects.equals(this.name, other.getName()) && Objects.equals(this.bankNumber, other.getBankNumber());
     }
 
+    @Override
+    public int hashCode() {
+        return name.hashCode()+bankNumber.hashCode();
+    }
+
 }
