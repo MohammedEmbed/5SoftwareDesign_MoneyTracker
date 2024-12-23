@@ -23,8 +23,8 @@ public class Main {
         PersonDatabase personDB = PersonDatabase.getInstance();
         TicketDatabase ticketDB = TicketDatabase.getInstance();
         DatabaseObserver observer = new DatabaseObserver();
-        Controller controller = new Controller(personDB, ticketDB);
         ticketDB.addObserver(observer);
+        Controller controller = new Controller(personDB, ticketDB);
 
         if(Objects.equals(properties.getProperty("view.type"),"JSwing")){
             AbstractViewFactory factory = new JSwingViewFactory();
@@ -37,14 +37,7 @@ public class Main {
             System.out.println("Error: View type could not be loaded.");
         }
 
-        Person testPerson = new Person("test","1");
-        Person testPerson2 = new Person("test2","2");
-        HashMap<Person,Double> map = new HashMap<>();
-        map.put(testPerson2,21.0);
-        Ticket testTicket = new Ticket("airplane ride",testPerson,21.0,"Even split",map);
-        controller.addTicket(testTicket);
-        controller.removeTicket(testTicket);
-        controller.undoCommand();
+
     }
 
 

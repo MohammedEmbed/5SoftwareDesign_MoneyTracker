@@ -1,14 +1,17 @@
 package databases;
 
+import observers.DatabaseObserver;
 import person.Person;
 
 import java.util.HashSet;
 
 public class PersonDatabase {
-    private static PersonDatabase instance;
-    private static HashSet<Person> db; //singleton pattern
+    private static PersonDatabase instance=null;
+    private HashSet<Person> db; //singleton pattern
+    private DatabaseObserver observer;
+
     private PersonDatabase(){
-        db = new HashSet<>();
+        this.db = new HashSet<>();
     }
 
     public static PersonDatabase getInstance(){
@@ -19,12 +22,23 @@ public class PersonDatabase {
         return instance;
     }
 
-    public boolean addPerson(Person person){
-        return db.add(person);
+    public void addObserver(DatabaseObserver observer) {
+        this.observer=observer;
     }
 
-    public boolean removePerson(Person person){
-        return db.remove(person);
+    public boolean addPerson(Person p){
+        if(this.observer!=null) {
+            observer.updatePersonDB(p,true);
+        }
+            return db.add(p);
+
+    }
+
+    public boolean removePerson(Person p){
+        if(this.observer!=null) {
+            observer.updatePersonDB(p,false);
+        }
+        return db.remove(p);
     }
 
     public boolean contains(Person p){
@@ -32,7 +46,7 @@ public class PersonDatabase {
     }
 
     public HashSet<Person> getGroup(){
-        return new HashSet<>(db);
+        return new HashSet<>(this.db);
         // I need function to compare if person that makes a ticket is a person from database
         //Return new HashSet to make copy so that we don't ruin the original.
     }

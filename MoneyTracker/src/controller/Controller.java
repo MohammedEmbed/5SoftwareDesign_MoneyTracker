@@ -29,19 +29,49 @@ public class Controller {
         return personDB.contains(p);
     }
 
-    public HashMap<Person,HashMap<Person,Double>> calculateAllTickets(){//TODO: Unit Test
+    public HashMap<Person,HashMap<Person,Double>> calculateAllTickets(){
 
+        //Adding all tickets to a total debt map
         HashSet<Ticket> allTickets = ticketDB.getAllTickets();
         HashSet<Person> group = personDB.getGroup();
-        HashMap<Person,HashMap<Person,Double>> debtsPerPerson = new HashMap<>();
+        HashMap<Person,HashMap<Person,Double>> allDebts = new HashMap<>();
+        for(Person p : group){
+            HashMap<Person,Double> totalDebt = new HashMap<>();
+            for(Ticket t : allTickets){
+                if (!p.equals(t.getBeneficiary())){
+                    if(totalDebt.get(t.getBeneficiary())!=null){
+                        totalDebt.put(t.getBeneficiary(),totalDebt.get(t.getBeneficiary())+t.getDebts().get(p));
+                    }else{
+                        totalDebt.put(t.getBeneficiary(),t.getDebts().get(p));
+                    }
+                }
+            }
+            allDebts.put(p,totalDebt);
+        }
+
+        //running over the map and then subtracting/simplifying all debts
+
+        for(Person person : allDebts.keySet()){//A person
+            for(Person other : allDebts.get(person).keySet()){//their debt to someone
+                if(allDebts.get(other).get(person)!=null){//someone has debt to them too
+                    if(allDebts.get(other).get(person) < allDebts.get(person).get(other)){
+
+                    }else{
+
+                    }
+
+                }
+            }
+
+        }
 
 
-        return null;
+        return allDebts;
     }
 
 
 
-    public boolean undoCommand(){ //TODO: Unit Test
+    public boolean undoCommand(){
         Command command = commandStack.pop();
         return command.unexecute();
     }

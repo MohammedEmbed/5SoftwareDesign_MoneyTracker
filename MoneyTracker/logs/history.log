@@ -1,3 +1,5 @@
-[2024-11-17 11:46:22] LOG: Ticket added:  Even split ticket: 'airplane ride' €21.0 paid by name:test, Banknumber: 1. Paid for: [name:test2, Banknumber: 2: €21.0]
-[2024-11-17 11:46:22] LOG: Ticket removed:  Even split ticket: 'airplane ride' €21.0 paid by name:test, Banknumber: 1. Paid for: [name:test2, Banknumber: 2: €21.0]
-[2024-11-17 11:46:22] LOG: Ticket added:  Even split ticket: 'airplane ride' €21.0 paid by name:test, Banknumber: 1. Paid for: [name:test2, Banknumber: 2: €21.0]
+[2024-11-18 13:58:8] LOG: Ticket added:  Uneven split ticket: 'airplane ride' €21.0 paid by name:test1, Banknumber: 1. Paid for: [name:test2, Banknumber: 2: €21.0,name:test3, Banknumber: 3: €50.0]
+[2024-11-18 13:58:8] LOG: Ticket added:  Uneven split ticket: 'restaurant' €24.0 paid by name:test2, Banknumber: 2. Paid for: [name:test1, Banknumber: 1: €17.0,name:test3, Banknumber: 3: €7.0]
+[2024-11-18 13:58:8] LOG: Ticket removed:  Uneven split ticket: 'airplane ride' €21.0 paid by name:test1, Banknumber: 1. Paid for: [name:test2, Banknumber: 2: €21.0,name:test3, Banknumber: 3: €50.0]
+[2024-11-18 13:58:8] LOG: Ticket added:  Uneven split ticket: 'airplane ride' €21.0 paid by name:test1, Banknumber: 1. Paid for: [name:test2, Banknumber: 2: €21.0,name:test3, Banknumber: 3: €50.0]
+[2024-11-18 13:58:8] LOG: Ticket added:  uneven ticket: 'Restaurant' €100.0 paid by name:1, Banknumber: 1. Paid for: [name:1, Banknumber: 1: €20.0,name:2, Banknumber: 2: €30.0,name:3, Banknumber: 3: €50.0]

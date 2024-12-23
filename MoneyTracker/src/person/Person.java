@@ -21,7 +21,7 @@ public class Person {
     @Override
     public String toString(){
 
-        return "name:" + name + ", Banknumber: "+ bankNumber;
+        return name + ", "+ bankNumber;
     }
 
     @Override

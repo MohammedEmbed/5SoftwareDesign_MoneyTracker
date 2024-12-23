@@ -14,6 +14,7 @@ public class TicketDatabase {
     private TicketDatabase(){
         db = new HashSet<>();
     }
+
     public static TicketDatabase getInstance(){
         if(instance == null){
             instance = new TicketDatabase();
@@ -26,15 +27,16 @@ public class TicketDatabase {
     }
 
     public boolean addTicket(Ticket t) {
-
-
-        observer.updateTicketDB(t,true);
+        if(this.observer!=null) {
+            observer.updateTicketDB(t, true);
+        }
         return this.db.add(t);
     }
 
     public boolean removeTicket(Ticket t) {//TODO: check if logs should actually be updated with the removal of the ticket.
-
-        observer.updateTicketDB(t,false);
+        if(this.observer!=null) {
+            observer.updateTicketDB(t, false);
+        }
         return this.db.remove(t);
     }
     public HashSet<Ticket> getAllTickets(){

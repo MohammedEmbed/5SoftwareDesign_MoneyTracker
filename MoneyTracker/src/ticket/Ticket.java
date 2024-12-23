@@ -20,6 +20,18 @@ public class Ticket {
 
     }
 
+    public Person getBeneficiary() {
+        return beneficiary;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public HashMap<Person, Double> getDebts() {
+        return debts;
+    }
+
     @Override
     public String toString(){//TODO: make Person and debts have a toString method
         StringBuilder sb = new StringBuilder(" "+paymentType + " ticket: '"+description+"' €" + total + " paid by " + beneficiary + ". Paid for: [");
