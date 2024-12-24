@@ -7,6 +7,7 @@ import ticket.Ticket;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class JSwingView implements AbstractView{
@@ -18,6 +19,7 @@ public class JSwingView implements AbstractView{
 
     private JPanel menuPanel;
     private JPanel groupPanel;
+    private JPanel groupListPanel;
     private JPanel ticketPanel;
     private JPanel calculatePanel;
     private JPanel groupList;
@@ -56,6 +58,7 @@ public class JSwingView implements AbstractView{
     private void initialize() {
         menuFrame.setTitle("MoneyTracker");
         menuFrame.setSize(600,300);
+        menuFrame.setBackground(Color.WHITE);
         cardPanel.setLayout(cardLayout);
 
         initMainMenu();
@@ -89,40 +92,72 @@ public class JSwingView implements AbstractView{
 
     private void initGroupMenu(){
         //groupPanel
-        groupPanel.setLayout(new BorderLayout());
+        groupPanel.setLayout(new BoxLayout(groupPanel, BoxLayout.Y_AXIS));
         groupPanel.add(new JLabel("Group"));
+        groupPanel.setSize(600,300);
+
+        //buttonPanel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         JButton groupToMenuButton = new JButton("Back");
-        groupPanel.add(groupToMenuButton,BorderLayout.NORTH);
+        buttonPanel.add(groupToMenuButton);
         groupToMenuButton.addActionListener(e -> mainMenuEvent());
 
-
         JButton addPersonButton = new JButton("Add Person");
-        personField = new JTextField("");
-        bankNumberField = new JTextField("");
-        groupPanel.add(personField,BorderLayout.WEST);
-        groupPanel.add(bankNumberField);
-
-        groupPanel.add(addPersonButton, BorderLayout.EAST);
+        buttonPanel.add(addPersonButton);
         addPersonButton.addActionListener(e -> addPersonEvent());
 
+        JButton undoButton = new JButton("Undo");
+        buttonPanel.add(undoButton);
+        undoButton.addActionListener(e -> undoEvent());
+
+        groupPanel.add(buttonPanel);
+
+        //personPanel
+        JPanel personPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        personField = new JTextField(10);
+        bankNumberField = new JTextField(20);
+        personPanel.add(new JLabel("Name: "));
+        personPanel.add(personField);
+        personPanel.add(new JLabel("Banknumber: "));
+        personPanel.add(bankNumberField);
+        groupPanel.add(personPanel);
+
+
+        //These names are bad I know I'm sorry
+        groupListPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         groupList = new JPanel();
         groupList.setLayout(new BoxLayout(groupList,BoxLayout.Y_AXIS));
-        groupList.add(new JLabel("person1:"));
-        groupList.add(new JLabel("person2:"));
-        groupList.add(new JLabel("person3:"));
+        groupListPanel.add(groupList);
+        groupPanel.add(groupListPanel);
 
 
-        groupPanel.add(groupList,BorderLayout.SOUTH);
 
     }
+
     private void initTicketMenu(){
         //ticketPanel
         ticketPanel.setLayout(new BoxLayout(ticketPanel, BoxLayout.Y_AXIS));
         ticketPanel.add(new JLabel("Ticket"));
+
+
+        //add buttons to add ticket, go back, and undo
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
         JButton ticketToMenuButton = new JButton("Back");
-        ticketPanel.add(ticketToMenuButton);
+        buttonPanel.add(ticketToMenuButton);
         ticketToMenuButton.addActionListener(e -> mainMenuEvent());
+
+        JButton addTicketButton = new JButton("Add the ticket");
+        addTicketButton.addActionListener(e -> addTicketMenuEvent());
+        buttonPanel.add(addTicketButton);
+
+        JButton undoButton = new JButton("Undo");
+        undoButton.addActionListener(e -> undoEvent());
+        buttonPanel.add(undoButton);
+
+        ticketPanel.add(buttonPanel);
+
 
         //beneficiary
         JPanel beneficiaryPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -177,10 +212,7 @@ public class JSwingView implements AbstractView{
 
         ticketPanel.add(spenderPanel);
 */
-        //add button
-        JButton addTicketButton = new JButton("Add the ticket");
-        addTicketButton.addActionListener(e -> addTicketMenuEvent());
-        ticketPanel.add(addTicketButton);
+
 
 
     }
@@ -207,31 +239,31 @@ public class JSwingView implements AbstractView{
     @Override
     public void mainMenuEvent(){
         cardLayout.show(cardPanel,"menu");
-
+        menuFrame.pack();
     }
 
     @Override
     public void groupMenuEvent() {
         cardLayout.show(cardPanel,"group");
-
+        menuFrame.pack();
     }
 
     @Override
     public void ticketMenuEvent() {
         cardLayout.show(cardPanel,"ticket");
-
+        menuFrame.pack();
     }
 
     @Override
     public void calculateMenuEvent() {
         cardLayout.show(cardPanel,"calculate");
-
+        menuFrame.pack();
     }
 
     @Override
     public void extraMenuEvent() {
         cardLayout.show(cardPanel,"extra");
-
+        menuFrame.pack();
     }
 
     @Override
@@ -251,9 +283,31 @@ public class JSwingView implements AbstractView{
             JOptionPane.showMessageDialog(null, "Name CANNOT be empty!!");
 
         }
-        //TODO: update groupPanel to show new person
+        updateGroupList();
 
+    }
+    private void updateGroupList(){
+        HashSet<Person> currentGroup = controller.getGroup();
+        groupListPanel.removeAll();
+        groupList.removeAll();
+        menuFrame.remove(groupListPanel);
+        menuFrame.pack();
 
+        if(currentGroup.isEmpty()){
+            return;
+        }
+        groupList = new JPanel();
+        groupList.setLayout(new BoxLayout(groupList,BoxLayout.Y_AXIS));
+        int i=1;
+        for(Person p : currentGroup){
+            JLabel personLabel = new JLabel("Person "+ i++ + ": " + p.toString());
+            groupList.add(personLabel);
+        }
+
+        groupListPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        groupListPanel.add(groupList);
+        groupPanel.add(groupListPanel);
+        menuFrame.pack();
 
     }
 
@@ -306,9 +360,16 @@ public class JSwingView implements AbstractView{
         } else{
             JOptionPane.showMessageDialog(null, "Benificiary or spender is not in the group!");
         }
-
+        JOptionPane.showMessageDialog(null,"Ticket added Succesfully!");
     }
 
+    @Override
+    public void undoEvent(){
+        if(!controller.undoCommand()){
+            JOptionPane.showMessageDialog(null, "Could not undo command. The command is invalid!");
+        }
+        updateGroupList();
+    }
     @Override
     public void calculateDebtEvent() {
         calculatePanel.removeAll(); // previous calculation removed after the calculate button is pressed.

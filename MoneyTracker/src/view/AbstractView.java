@@ -16,6 +16,7 @@ public interface AbstractView {
     //events passed to the controller
     void addPersonEvent();
     void addTicketMenuEvent();
+    void undoEvent();
     void calculateDebtEvent();
 
 

@@ -32,7 +32,7 @@ public class Controller {
     public HashMap<Person,HashMap<Person,Double>> calculateAllTickets(){
 
         //Adding all tickets to a total debt map
-        HashSet<Ticket> allTickets = ticketDB.getAllTickets();
+        HashSet<Ticket> allTickets = getAllTickets();
         HashSet<Person> group = personDB.getGroup();
         HashMap<Person,HashMap<Person,Double>> allDebts = new HashMap<>();
         for(Person p : group){
@@ -75,6 +75,9 @@ public class Controller {
 
 
     public boolean undoCommand(){
+        if(commandStack.isEmpty()){
+            return false;
+        }
         Command command = commandStack.pop();
         return command.unexecute();
     }

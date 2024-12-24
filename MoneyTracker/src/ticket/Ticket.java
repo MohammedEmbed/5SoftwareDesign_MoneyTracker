@@ -33,8 +33,8 @@ public class Ticket {
     }
 
     @Override
-    public String toString(){//TODO: make Person and debts have a toString method
-        StringBuilder sb = new StringBuilder(" "+paymentType + " ticket: '"+description+"' €" + total + " paid by " + beneficiary + ". Paid for: [");
+    public String toString(){
+        StringBuilder sb = new StringBuilder(paymentType + " ticket: '"+description+"' €" + total + " paid by " + beneficiary + ". Paid for: [");
         String prefix = "";
         for(HashMap.Entry<Person, Double> entry: debts.entrySet()){
             sb.append(prefix);

@@ -43,6 +43,10 @@ public class TerminalView implements AbstractView{
     public void extraMenuEvent() {
 
     }
+    @Override
+    public void undoEvent(){
+
+    }
 
     @Override
     public void addPersonEvent() {
