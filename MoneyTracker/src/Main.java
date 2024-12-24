@@ -24,6 +24,7 @@ public class Main {
         TicketDatabase ticketDB = TicketDatabase.getInstance();
         DatabaseObserver observer = new DatabaseObserver();
         ticketDB.addObserver(observer);
+        personDB.addObserver(observer);
         Controller controller = new Controller(personDB, ticketDB);
 
         if(Objects.equals(properties.getProperty("view.type"),"JSwing")){

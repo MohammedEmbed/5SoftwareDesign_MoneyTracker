@@ -20,7 +20,7 @@ public class JSwingView implements AbstractView{
     private JPanel groupPanel;
     private JPanel ticketPanel;
     private JPanel calculatePanel;
-    private JPanel personPannel;
+    private JPanel groupList;
     private JTextField personField;
     private JTextField beneficiaryNameField;
     private JTextField beneficiaryBankField;
@@ -48,7 +48,6 @@ public class JSwingView implements AbstractView{
         this.groupPanel = new JPanel();
         this.ticketPanel = new JPanel();
         this.calculatePanel = new JPanel();
-        this.personPannel = new JPanel();
         this.debts = new HashMap<>();
 
         initialize();
@@ -99,15 +98,15 @@ public class JSwingView implements AbstractView{
 
 
         JButton addPersonButton = new JButton("Add Person");
-        personField = new JTextField("name");
-        bankNumberField = new JTextField("banknumber");
+        personField = new JTextField("");
+        bankNumberField = new JTextField("");
         groupPanel.add(personField,BorderLayout.WEST);
         groupPanel.add(bankNumberField);
 
         groupPanel.add(addPersonButton, BorderLayout.EAST);
         addPersonButton.addActionListener(e -> addPersonEvent());
 
-        JPanel groupList = new JPanel();
+        groupList = new JPanel();
         groupList.setLayout(new BoxLayout(groupList,BoxLayout.Y_AXIS));
         groupList.add(new JLabel("person1:"));
         groupList.add(new JLabel("person2:"));

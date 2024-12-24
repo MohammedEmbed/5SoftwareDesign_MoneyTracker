@@ -38,9 +38,29 @@ public class DatabaseObserver {
         }
     }
 
+    private void log(String logEntry){
+        try {
+            FileWriter writer = new FileWriter("Moneytracker/logs/history.log",true);
+            writer.write(logEntry);
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Error: Could not write to log!");
+        }
+    }
 
     public void updatePersonDB(Person p, boolean isAdded){
 
+        int year = this.calendar.get(Calendar.YEAR);
+        int month = this.calendar.get(Calendar.MONTH);
+        int day = this.calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = this.calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = this.calendar.get(Calendar.MINUTE);
+        int second = this.calendar.get(Calendar.SECOND);
+
+
+        String logAction = isAdded ? "Person added: " : "Person removed: ";
+        String logEntry = "[" + year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second+"] LOG: "+logAction + p+"\n";
+        log(logEntry);
     }
 
     public void updateTicketDB(Ticket t, boolean isAdded){
@@ -55,21 +75,7 @@ public class DatabaseObserver {
 
 
         String logAction = isAdded ? "Ticket added: " : "Ticket removed: ";
-        String logEntry = "[" + year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second+"] LOG: "+logAction + t+"\n";;
-//        if(isAdded) {
-//            logEntry = "[" + year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second+"] LOG: Ticket added: " + t+"\n";
-//
-//        }else{
-//            logEntry = "[" + year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second+ "] LOG: Ticket removed: " + t+"\n";
-//        }
-
-        try {
-            FileWriter writer = new FileWriter("Moneytracker/logs/history.log",true);
-            writer.write(logEntry);
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Error: Could not write to log!");
-        }
-
+        String logEntry = "[" + year + "-" + month + "-" + day + " " + hour+":"+minute+":"+second+"] LOG: "+logAction + t+"\n";
+        log(logEntry);
     }
 }
