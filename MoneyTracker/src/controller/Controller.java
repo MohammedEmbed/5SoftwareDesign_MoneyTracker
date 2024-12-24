@@ -51,13 +51,16 @@ public class Controller {
 
         //running over the map and then subtracting/simplifying all debts
 
+        //this next part is going to be both illegal and unreadable I apologize
         for(Person person : allDebts.keySet()){//A person
             for(Person other : allDebts.get(person).keySet()){//their debt to someone
-                if(allDebts.get(other).get(person)!=null){//someone has debt to them too
-                    if(allDebts.get(other).get(person) < allDebts.get(person).get(other)){
-
+                if(allDebts.get(other).get(person)!=null){//that someone has debt to them too
+                    if(allDebts.get(other).get(person) < allDebts.get(person).get(other)){//update larger debt and remove the smaller
+                        allDebts.get(person).put(other,allDebts.get(person).get(other)-allDebts.get(other).get(person));
+                        allDebts.get(other).remove(person);
                     }else{
-
+                        allDebts.get(other).put(person,allDebts.get(other).get(person)-allDebts.get(person).get(other));
+                        allDebts.get(person).remove(other);
                     }
 
                 }

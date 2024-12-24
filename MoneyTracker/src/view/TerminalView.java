@@ -3,7 +3,7 @@ package view;
 
 import java.util.Scanner;
 
-//used mostly for debug purposes and to test functionality
+//unused
 public class TerminalView implements AbstractView{
 
     private Scanner sc;
