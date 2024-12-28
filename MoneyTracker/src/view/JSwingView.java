@@ -372,30 +372,26 @@ public class JSwingView implements AbstractView{
     }
     @Override
     public void calculateDebtEvent() {
-        calculatePanel.removeAll(); // previous calculation removed after the calculate button is pressed.
+        // Clear previous
+        calculatePanel.removeAll();
         calculatePanel.setLayout(new BoxLayout(calculatePanel, BoxLayout.Y_AXIS));
         HashMap<Person, HashMap<Person, Double>> deptsPerPerson = controller.calculateAllTickets();
-        calculatePanel.add(new JLabel("Dept calculations: "));
+        calculatePanel.add(new JLabel("Dept calculations:"));
 
-        for (Map.Entry<Person, HashMap<Person, Double>> entry : deptsPerPerson.entrySet()){
-            Person beneficiary = entry.getKey();
-            HashMap<Person, Double> spenders = entry.getValue();
+        for (Map.Entry<Person, HashMap<Person, Double>> entry : deptsPerPerson.entrySet()) {
+            Person spender = entry.getKey();
+            HashMap<Person, Double> debts = entry.getValue();
 
-            JPanel beneficiaryPanel = new JPanel(new BorderLayout());
-            beneficiaryPanel.add(new JLabel("Benefecifiary: "+ beneficiary.getName()), BorderLayout.WEST);
-
-            JPanel spenderPanel = new JPanel(new BorderLayout());
-            spenderPanel.setLayout(new BoxLayout(spenderPanel, BoxLayout.Y_AXIS));
-            for (Map.Entry<Person, Double> spenderEntry : spenders.entrySet()){
-                Person spender = spenderEntry.getKey();
-                Double amount = spenderEntry.getValue();
-                spenderPanel.add(new JLabel(spender.getName() + "needs to pay €" + amount));
+            for (Map.Entry<Person, Double> debtEntry : debts.entrySet()) {
+                Person beneficiary = debtEntry.getKey();
+                Double amount = debtEntry.getValue();
+                if (amount > 0) { // if debts exist show them
+                    calculatePanel.add(new JLabel(" " + spender.getName() + " owes " + beneficiary.getName() + ": €" + String.format("%.2f", amount)));
+                }
             }
-            beneficiaryPanel.add(spenderPanel, BorderLayout.WEST);
-            calculatePanel.add(beneficiaryPanel);
-
         }
 
+        calculatePanel.revalidate();
         menuFrame.repaint();
     }
 
