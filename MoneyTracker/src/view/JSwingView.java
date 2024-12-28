@@ -276,7 +276,7 @@ public class JSwingView implements AbstractView{
             controller.addPerson(person);
             personField.setText("");
             bankNumberField.setText("");
-            System.out.println( person + "is added succesfully!");
+            System.out.println( person + ", is added succesfully!");
 
         } else {
             JOptionPane.showMessageDialog(null, "Name CANNOT be empty!!");
@@ -359,7 +359,6 @@ public class JSwingView implements AbstractView{
         } else{
             JOptionPane.showMessageDialog(null, "Benificiary or spender is not in the group!");
         }
-        JOptionPane.showMessageDialog(null,"Ticket added Succesfully!");
     }
 
     @Override
@@ -375,10 +374,15 @@ public class JSwingView implements AbstractView{
         calculatePanel.removeAll();
         calculatePanel.setLayout(new BoxLayout(calculatePanel, BoxLayout.Y_AXIS));
         HashMap<Person, HashMap<Person, Double>> deptsPerPerson = controller.calculateAllTickets();
+
         calculatePanel.add(new JLabel("Dept calculations:"));
         JButton calculateToMenuButton = new JButton("Back");
         calculatePanel.add(calculateToMenuButton);
         calculateToMenuButton.addActionListener(e -> mainMenuEvent());
+
+        JButton calculateButton = new JButton("Calculate Tickets");
+        calculateButton.addActionListener(e -> calculateDebtEvent()); // Re-trigger calculation
+        calculatePanel.add(calculateButton);
 
 
         for (Map.Entry<Person, HashMap<Person, Double>> entry : deptsPerPerson.entrySet()) {

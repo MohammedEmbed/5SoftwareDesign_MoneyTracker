@@ -50,24 +50,28 @@ public class Controller {
         }
 
         //running over the map and then subtracting/simplifying all debts
-
+        HashMap<Person, HashMap<Person, Double>> updates = new HashMap<>(); //temporary map that is used so that we don't directly change alldebts during iteration
         //this next part is going to be both illegal and unreadable I apologize
         for(Person person : allDebts.keySet()){//A person
             for(Person other : allDebts.get(person).keySet()){//their debt to someone
                 if(allDebts.get(other).get(person)!=null){//that someone has debt to them too
-                    if(allDebts.get(other).get(person) < allDebts.get(person).get(other)){//update larger debt and remove the smaller
-                        allDebts.get(person).put(other,allDebts.get(person).get(other)-allDebts.get(other).get(person));
-                        allDebts.get(other).remove(person);
+                    double personToOther = allDebts.get(person).get(other);
+                    double otherToPerson = allDebts.get(other).get(person);
+                    if(otherToPerson < personToOther){//update larger debt and remove the smaller
+                        updates.computeIfAbsent(person, k -> new HashMap<>()).put(other, personToOther - otherToPerson);
+                        updates.computeIfAbsent(other, k -> new HashMap<>()).remove(person);
                     }else{
-                        allDebts.get(other).put(person,allDebts.get(other).get(person)-allDebts.get(person).get(other));
-                        allDebts.get(person).remove(other);
+                        updates.computeIfAbsent(other, k -> new HashMap<>()).put(person, otherToPerson - personToOther);
+                        updates.computeIfAbsent(person, k -> new HashMap<>()).remove(other);
                     }
 
                 }
             }
 
         }
-
+        for (Person person : updates.keySet()) {
+            allDebts.put(person, updates.getOrDefault(person, new HashMap<>()));
+        }
 
         return allDebts;
     }
