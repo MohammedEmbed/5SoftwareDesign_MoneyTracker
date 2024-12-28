@@ -35,7 +35,6 @@ public class JSwingView implements AbstractView{
     private JComboBox comboBox;
     private ButtonGroup buttonGroup;
 
-    private HashMap<Person, Double> debts;
 
 
 
@@ -50,7 +49,7 @@ public class JSwingView implements AbstractView{
         this.groupPanel = new JPanel();
         this.ticketPanel = new JPanel();
         this.calculatePanel = new JPanel();
-        this.debts = new HashMap<>();
+
 
         initialize();
     }
@@ -318,7 +317,7 @@ public class JSwingView implements AbstractView{
         String beneficaryBankNR = beneficiaryBankField.getText();
         Double total = Double.parseDouble(totalAmount.getText());
         String paymentType = buttonGroup.getSelection().getActionCommand();
-
+        HashMap<Person, Double> debts = new HashMap<>();
         HashMap<Person, Double> payments = new HashMap<>();
         /*String nameSpender = personField2.getText();
         String bankSpender = bankNumberField2.getText();
@@ -377,6 +376,10 @@ public class JSwingView implements AbstractView{
         calculatePanel.setLayout(new BoxLayout(calculatePanel, BoxLayout.Y_AXIS));
         HashMap<Person, HashMap<Person, Double>> deptsPerPerson = controller.calculateAllTickets();
         calculatePanel.add(new JLabel("Dept calculations:"));
+        JButton calculateToMenuButton = new JButton("Back");
+        calculatePanel.add(calculateToMenuButton);
+        calculateToMenuButton.addActionListener(e -> mainMenuEvent());
+
 
         for (Map.Entry<Person, HashMap<Person, Double>> entry : deptsPerPerson.entrySet()) {
             Person spender = entry.getKey();

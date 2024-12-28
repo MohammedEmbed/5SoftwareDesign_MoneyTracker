@@ -30,15 +30,17 @@ public class ITEST_Controller {
         controller.addPerson(testPerson3);
 
         HashMap<Person,Double> debt1 = new HashMap<>();
-        debt1.put(testPerson2,21.0);
-        debt1.put(testPerson3,50.0);
+        debt1.put(testPerson1,33.0);
+        debt1.put(testPerson2,33.0);
+        debt1.put(testPerson3,33.0);
 
         HashMap<Person,Double> debt2 = new HashMap<>();
-        debt2.put(testPerson1,17.0);
-        debt2.put(testPerson3,7.0);
+        debt2.put(testPerson1,3.0);
+        debt2.put(testPerson2,3.0);
+        debt2.put(testPerson3,3.0);
 
-        Ticket testTicket1 = new Ticket("airplane ride",testPerson1,71.0,"Uneven split",debt1);
-        Ticket testTicket2 = new Ticket("restaurant",testPerson2,24.0,"Uneven split",debt2);
+        Ticket testTicket1 = new Ticket("airplane ride",testPerson1,99.0,"Even split",debt1);
+        Ticket testTicket2 = new Ticket("restaurant",testPerson2,9.0,"Even split",debt2);
 
         controller.addTicket(testTicket1);
         controller.addTicket(testTicket2);
@@ -51,12 +53,12 @@ public class ITEST_Controller {
         expectedDebt.put(testPerson1,testperson1Debt);
 
         HashMap<Person,Double> testperson2Debt = new HashMap<>();
-        testperson2Debt.put(testPerson1,4.0);
+        testperson2Debt.put(testPerson1,30.0);
         expectedDebt.put(testPerson2,testperson2Debt);
 
         HashMap<Person,Double> testperson3Debt = new HashMap<>();
-        testperson3Debt.put(testPerson1,50.0);
-        testperson3Debt.put(testPerson2,7.0);
+        testperson3Debt.put(testPerson1,33.0);
+        testperson3Debt.put(testPerson2,3.0);
         expectedDebt.put(testPerson3,testperson3Debt);
 
         assertEquals(expectedDebt,totalDebt);

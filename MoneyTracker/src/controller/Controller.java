@@ -35,10 +35,10 @@ public class Controller {
         HashSet<Ticket> allTickets = getAllTickets();
         HashSet<Person> group = personDB.getGroup();
         HashMap<Person,HashMap<Person,Double>> allDebts = new HashMap<>();
-        for(Person p : group){
-            HashMap<Person,Double> totalDebt = new HashMap<>();
-            for(Ticket t : allTickets){
-                if (!p.equals(t.getBeneficiary())){
+        for(Person p : group){//each person in the group
+            HashMap<Person,Double> totalDebt = new HashMap<>();//their debt to everyone
+            for(Ticket t : allTickets){//calculated from all tickets
+                if (!p.equals(t.getBeneficiary())){//debt to someone else
                     if(totalDebt.get(t.getBeneficiary())!=null){
                         totalDebt.put(t.getBeneficiary(),totalDebt.get(t.getBeneficiary())+t.getDebts().get(p));
                     }else{
