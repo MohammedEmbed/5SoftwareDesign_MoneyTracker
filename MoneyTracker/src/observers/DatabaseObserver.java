@@ -12,7 +12,6 @@ import java.util.Calendar;
 
 public class DatabaseObserver {
 
-    private AbstractView view;
     private File log;
     private Calendar calendar;
 
@@ -26,8 +25,7 @@ public class DatabaseObserver {
             this.log = new File("Moneytracker/logs/history.log");
             if(log.createNewFile()){
                 System.out.println("log created successfully!");
-            }else{//TODO: maybe instead of overwriting make a file with a timestamp in the name
-                System.out.println("file exists already! Overwriting...");
+            }else{
                 log.delete();
                 log.createNewFile();
 

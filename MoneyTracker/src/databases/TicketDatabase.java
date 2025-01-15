@@ -33,7 +33,7 @@ public class TicketDatabase {
         return this.db.add(t);
     }
 
-    public boolean removeTicket(Ticket t) {//TODO: check if logs should actually be updated with the removal of the ticket.
+    public boolean removeTicket(Ticket t) {
         if(this.observer!=null) {
             observer.updateTicketDB(t, false);
         }
